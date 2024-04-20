@@ -1,0 +1,76 @@
+# donor893.github.io
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中古パソコン販売サイト</title>
+  <script>
+    // サンプルデータ（仮定）
+    const computers = [
+      { brand: 'Dell', type: 'デスクトップ', price: 50000 },
+      { brand: 'HP', type: 'ノートブック', price: 60000 },
+      { brand: 'Lenovo', type: 'ノートブック', price: 70000 },
+      // 他のコンピュータデータも追加
+    ];
+
+    // 商品を表示する関数
+    function displayComputers(computers) {
+      const computerList = document.getElementById('computer-list');
+      computerList.innerHTML = '';
+      computers.forEach(computer => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${computer.brand} - ${computer.type} - ￥${computer.price}`;
+        computerList.appendChild(listItem);
+      });
+    }
+
+    // フィルター処理を行う関数
+    function filterComputers() {
+      const brandFilter = document.getElementById('brand-filter').value;
+      const typeFilter = document.getElementById('type-filter').value;
+      const maxPriceFilter = document.getElementById('max-price-filter').value;
+
+      const filteredComputers = computers.filter(computer => {
+        if (brandFilter && computer.brand !== brandFilter) return false;
+        if (typeFilter && computer.type !== typeFilter) return false;
+        if (maxPriceFilter && computer.price > parseInt(maxPriceFilter)) return false;
+        return true;
+      });
+
+      displayComputers(filteredComputers);
+    }
+  </script>
+</head>
+<body>
+  <h1>中古パソコン販売サイト</h1>
+
+  <!-- フィルター -->
+  <label for="brand-filter">ブランド：</label>
+  <select id="brand-filter">
+    <option value="">すべて</option>
+    <option value="Dell">Dell</option>
+    <option value="HP">HP</option>
+    <option value="Lenovo">Lenovo</option>
+    <!-- 他のブランドを追加 -->
+  </select>
+
+  <label for="type-filter">タイプ：</label>
+  <select id="type-filter">
+    <option value="">すべて</option>
+    <option value="デスクトップ">デスクトップ</option>
+    <option value="ノートブック">ノートブック</option>
+    <!-- 他のタイプを追加 -->
+  </select>
+
+  <label for="max-price-filter">最大価格：</label>
+  <input type="number" id="max-price-filter">
+
+  <button onclick="filterComputers()">フィルター</button>
+
+  <!-- 商品リスト -->
+  <ul id="computer-list">
+    <!-- フィルターされた商品がここに表示される -->
+  </ul>
+</body>
+</html>
