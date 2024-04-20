@@ -4,73 +4,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>中古パソコン販売サイト</title>
+  <title>ECサイト</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0ff;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #004080;
+    }
+    .product {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+      background-color: #e6f3ff;
+    }
+    .product img {
+      max-width: 100%;
+      height: auto;
+    }
+    .product-details {
+      margin-top: 10px;
+    }
+    .product-name {
+      font-weight: bold;
+      color: #004080;
+    }
+    .product-price {
+      color: #008000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ECサイト</h1>
+
+    <!-- 商品リスト -->
+    <div id="products"></div>
+  </div>
+
   <script>
     // サンプルデータ（仮定）
-    const computers = [
-      { brand: 'Dell', type: 'デスクトップ', price: 50000 },
-      { brand: 'HP', type: 'ノートブック', price: 60000 },
-      { brand: 'Lenovo', type: 'ノートブック', price: 70000 },
-      // 他のコンピュータデータも追加
+    const products = [
+      { name: 'GPU', price: 50000, image: 'gpu.jpg' },
+      { name: 'CPU', price: 60000, image: 'cpu.jpg' },
+      { name: 'PCの小物', price: 2000, image: 'accessory.jpg' },
+      // 他の商品データも追加
     ];
 
     // 商品を表示する関数
-    function displayComputers(computers) {
-      const computerList = document.getElementById('computer-list');
-      computerList.innerHTML = '';
-      computers.forEach(computer => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${computer.brand} - ${computer.type} - ￥${computer.price}`;
-        computerList.appendChild(listItem);
+    function displayProducts() {
+      const productsDiv = document.getElementById('products');
+      productsDiv.innerHTML = '';
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
+
+        const productImage = document.createElement('img');
+        productImage.src = product.image;
+        productDiv.appendChild(productImage);
+
+        const productDetails = document.createElement('div');
+        productDetails.classList.add('product-details');
+
+        const productName = document.createElement('div');
+        productName.classList.add('product-name');
+        productName.textContent = product.name;
+        productDetails.appendChild(productName);
+
+        const productPrice = document.createElement('div');
+        productPrice.classList.add('product-price');
+        productPrice.textContent = `￥${product.price}`;
+        productDetails.appendChild(productPrice);
+
+        productDiv.appendChild(productDetails);
+        productsDiv.appendChild(productDiv);
       });
     }
 
-    // フィルター処理を行う関数
-    function filterComputers() {
-      const brandFilter = document.getElementById('brand-filter').value;
-      const typeFilter = document.getElementById('type-filter').value;
-      const maxPriceFilter = document.getElementById('max-price-filter').value;
-
-      const filteredComputers = computers.filter(computer => {
-        if (brandFilter && computer.brand !== brandFilter) return false;
-        if (typeFilter && computer.type !== typeFilter) return false;
-        if (maxPriceFilter && computer.price > parseInt(maxPriceFilter)) return false;
-        return true;
-      });
-
-      displayComputers(filteredComputers);
-    }
+    // ページ読み込み時に商品を表示
+    displayProducts();
   </script>
-</head>
-<body>
-  <h1>中古パソコン販売サイト</h1>
-
-  <!-- フィルター -->
-  <label for="brand-filter">ブランド：</label>
-  <select id="brand-filter">
-    <option value="">すべて</option>
-    <option value="Dell">Dell</option>
-    <option value="HP">HP</option>
-    <option value="Lenovo">Lenovo</option>
-    <!-- 他のブランドを追加 -->
-  </select>
-
-  <label for="type-filter">タイプ：</label>
-  <select id="type-filter">
-    <option value="">すべて</option>
-    <option value="デスクトップ">デスクトップ</option>
-    <option value="ノートブック">ノートブック</option>
-    <!-- 他のタイプを追加 -->
-  </select>
-
-  <label for="max-price-filter">最大価格：</label>
-  <input type="number" id="max-price-filter">
-
-  <button onclick="filterComputers()">フィルター</button>
-
-  <!-- 商品リスト -->
-  <ul id="computer-list">
-    <!-- フィルターされた商品がここに表示される -->
-  </ul>
 </body>
 </html>
